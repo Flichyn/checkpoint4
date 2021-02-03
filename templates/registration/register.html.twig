@@ -1,0 +1,64 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Register{% endblock %}#}
+
+{#{% block body %}#}
+{#    {% for flashError in app.flashes('verify_email_error') %}#}
+{#        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
+{#    {% endfor %}#}
+
+{#    <h1>Register</h1>#}
+
+{#    {{ form_start(registrationForm) }}#}
+{#    {{ form_row(registrationForm.email) }}#}
+{#    {{ form_row(registrationForm.plainPassword, {#}
+{#        label: 'Password'#}
+{#    }) }}#}
+{#    #}{# {{ form_row(registrationForm.agreeTerms) }} #}
+
+{#    <button type="submit" class="btn">Register</button>#}
+{#    {{ form_end(registrationForm) }}#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Inscription{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Inscription</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Formulaire d'inscription</h2>
+            <div class="py-4">
+                <div class="container">
+                    {% for flashError in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                    {% endfor %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            Vous êtes déjà connecté, {{ app.user.username }}. <a
+                                    href="{{ path('app_logout') }}">Déconnexion</a>
+                        </div>
+                    {% endif %}
+
+                    {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.name) }}
+                    {{ form_row(registrationForm.plainPassword) }}
+                    {# {{ form_row(registrationForm.agreeTerms) }} #}
+
+                    <div class="text-center mt-5">
+                        <button class="btn-fancy">Inscription</button>
+                    </div>
+                    {{ form_end(registrationForm) }}
+                    <p class="text-center py-4">Vous possédez déjà un compte ?<br>
+                        <a class="text-secondary" href="{{ path('app_login') }}">Connectez-vous dès maintenant !</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
