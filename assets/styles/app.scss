@@ -5,6 +5,7 @@ body {
     background-image: url('../images/white-wall.jpg');
     font-family: $font-text;
     color: $dark;
+    margin-top: $navbar-height;
 }
 
 nav {
@@ -102,6 +103,14 @@ a:hover {
 }
 .opacity-0h5:hover {
     opacity:1!important;
+}
+
+input {
+    margin-bottom: $spacing-2;
+}
+
+.alert {
+    margin: 0;
 }
 
 .btn-fancy {
