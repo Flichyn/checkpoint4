@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+{% block body %}
+    <main>
+        <div class="header mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Wishlister</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Bienvenue sur Wishlister !</h2>
+            <div class="py-4">
+                <div class="pb-4">
+                    <p>Ne vous êtes-vous jamais demandé ce qu'un de vos proches pourrait désirer pour les fêtes de fin
+                        d'années ou pour son anniversaire ?<br>
+                        Bien sûr, vous préféreriez ne pas lui demander directement pour
+                        éviter de lui gâcher une potentielle surprise. Dans cette situation, on demande au conjoint ou à
+                        d'éventuels autres amis, mais ce n'est jamais simple... D'autant plus que si on se retrouve à
+                        plusieurs dans ce cas-là, deux personnes pourraient potentiellement offrir un même cadeau à une
+                        même personne !</p>
+                </div>
+
+                <h3>Qu'est-ce que Wishlister ?</h3>
+                <p>Tout simplement, c'est une application de création de liste de souhaits communautaire et efficace
+                    !<br>
+                    Créez une liste et ajoutez-y vos souhaits. Ensuite, créez un groupe avec vos amis ou votre famille
+                    en
+                    les invitant à vous rejoindre. En quelques clics, vous avez créé une liste de souhaits en ligne
+                    commune,
+                    grâce à laquelle vos proches ne pourront plus se plaindre de ne pas savoir quoi vous offrir à votre
+                    anniversaire !</p>
+            </div>
+            <div class="py-4">
+                <h3>Comment s'en servir ?</h3>
+                <p>C'est tout simple ! Créez votre compte, créez votre liste de souhaits instantanément, invitez vos
+                    proches à s'inscrire et ajoutez-les à votre groupe ! Vous pouvez ajouter autant de souhaits que vous
+                    voulez à votre liste, alors ne vous privez pas !</p>
+            </div>
+            <div class="text-center mb-4">
+                <a class="btn-fancy" href="">Créer un compte</a>
+            </div>
+        </div>
+    </main>
+{% endblock %}
