@@ -1,0 +1,8 @@
+{% block body %}
+    <h1>Formulaire de contact Wishlister</h1><br>
+    <h2>Vous avez reçu un message de {{ contact.name }} :</h2><br>
+    <h3>{{ contact.subject }}</h3>
+    <p>{{ contact.message }}</p><br>
+
+    <p>Répondre par email : <a href="{{ contact.email }}">{{ contact.email }}</a></p>
+{% endblock %}
