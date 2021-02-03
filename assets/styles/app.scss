@@ -29,6 +29,31 @@ hr {
     width: 75%;
 }
 
+.dropleft {
+    .dropdown-menu {
+        border: none;
+    }
+
+    .dropdown-toggle::before {
+        transform: rotate(270deg);
+        color: $primary;
+    }
+}
+
+.dropdown-item {
+    color: $light;
+}
+
+.btn .dropdown-toggle {
+    border: none;
+}
+
+.icon-connexion {
+    position: fixed;
+    top: 12px;
+    right: 20px;
+}
+
 .bg-primary-custom {
     background-color: rgb(226, 169, 51, 0.6);
 }
