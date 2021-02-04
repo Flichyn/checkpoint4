@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} | Vos souhaits{% endblock %}
+{% block body %}
+    <main>
+        <div class="mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Vos souhaits</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Table de vos souhaits</h2>
+            <a class="btn btn-fancy text-primary m-2 p-2 ml-2 text-center" href="{{ path('wish_new') }}">Ajouter</a>
+            <div class="py-4">
+                <div class="table-responsive"></div>
+                <table class="table table-striped">
+                    <thead class="bg-secondary text-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for wish in wishes %}
+                        <tr>
+                            <td>{{ wish.name }}</td>
+                            <td>
+                                <div class="row">
+                                    {# <a class="text-secondary" href="{{ path('wish_show', {'id': wish.id}) }}">Voir</a> #}
+                                    <a class="text-primary btn btn-fancy"
+                                       href="{{ path('wish_edit', {'id': wish.id}) }}">Éditer</a>
+                                    {{ include('wish/_delete_form.html.twig') }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Aucune donnée trouvée.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

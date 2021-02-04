@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} | Éditer une liste de souhaits{% endblock %}{% block stylesheet %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('wish') }}
+{% endblock %}
+{% block body %}
+    <main>
+        <div class="mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Éditer une liste de souhait</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Formulaire d'édition</h2>
+            <div class="py-4">
+                <div class="container">
+                    {{ include('wishlist/_form.html.twig') }}
+                    <div class="text-center">
+                        {{ include('wishlist/_delete_form.html.twig') }}
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-fancy text-primary m-2 p-2 ml-2 text-center" href="{{ path('wish_index') }}">
+                            Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
