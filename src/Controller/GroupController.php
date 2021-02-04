@@ -7,12 +7,10 @@ use App\Entity\User;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
-use App\Repository\WishlistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/group")
@@ -40,14 +38,18 @@ class GroupController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $group = new Group();
-        $form = $this->createForm(GroupType::class, $group);
+        $form = $this->createForm(GroupType::class, $group, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($group);
             $entityManager->flush();
+            $this->addFlash('success', 'Le groupe a bien été crée.');
 
             return $this->redirectToRoute('group_index');
         }
@@ -66,17 +68,10 @@ class GroupController extends AbstractController
      */
     public function show(Group $group, UserRepository $userRepository): Response
     {
-//        $data = [];
-//        $groupUsers = $group->getUsers();
-//        foreach ($groupUsers as $user) {
-//            $data[] = [$username = $user->getName(), $wishlist = $wishlistRepository->findBy(['user' => $user])];
-//        }
-//        dd($group);
         $users = $userRepository->findBy(['id' => $group]);
         return $this->render('group/show.html.twig', [
             'group' => $group,
             'users' => $users
-//            'data' => $data
         ]);
     }
 
@@ -95,6 +90,7 @@ class GroupController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Le groupe a bien été modifié.');
 
             return $this->redirectToRoute('group_index');
         }

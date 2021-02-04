@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Wish;
+use App\Form\GroupType;
 use App\Form\WishType;
 use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +24,10 @@ class WishController extends AbstractController
      */
     public function index(WishRepository $wishRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         return $this->render('wish/index.html.twig', [
-            'wishes' => $wishRepository->findAll(),
+            'wishes' => $wishRepository->findBy(['user' => $user]),
         ]);
     }
 
@@ -73,6 +77,8 @@ class WishController extends AbstractController
      */
     public function edit(Request $request, Wish $wish): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
 

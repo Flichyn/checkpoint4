@@ -42,7 +42,7 @@ class WishlistController extends AbstractController
         $user = $this->getUser();
 
         $wishlist = new Wishlist();
-        $form = $this->createForm(WishlistType::class, $wishlist);
+        $form = $this->createForm(WishlistType::class, $wishlist, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,6 +65,7 @@ class WishlistController extends AbstractController
     /**
      * @Route("/{id}", name="wishlist_show", methods={"GET"})
      * @param Wishlist $wishlist
+     * @param WishRepository $wishRepository
      * @return Response
      */
     public function show(Wishlist $wishlist, WishRepository $wishRepository): Response
@@ -72,6 +73,7 @@ class WishlistController extends AbstractController
         $wishes = $wishRepository->findOneBy(['id' => $wishlist]);
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
+            'wishes' => $wishes,
         ]);
     }
 
@@ -83,7 +85,9 @@ class WishlistController extends AbstractController
      */
     public function edit(Request $request, Wishlist $wishlist): Response
     {
-        $form = $this->createForm(WishlistType::class, $wishlist);
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(WishlistType::class, $wishlist, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

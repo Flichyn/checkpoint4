@@ -19,19 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class GroupType extends AbstractType
 {
-//    private $security;
-//
-//    public function __construct(Security $security)
-//    {
-//        $this->security = $security;
-//    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        dd($options['user']);
-//        /** @var User $user */
-//        $user = $this->security->getUser()->get;
-
         $builder
             ->setMethod('GET')
             ->add('name', TextType::class, [
@@ -50,11 +39,11 @@ class GroupType extends AbstractType
                 'choice_label' => 'name',
                 'expanded' => true,
                 'multiple' => true,
-                'attr' => ['class' => 'users py-3'],
+                'attr' => ['class' => 'wishes py-3'],
                 'query_builder' => function (EntityRepository $er) use ($options) {
-                return $er->createQueryBuilder('w')
-                    ->where('w.user = :user')
-                    ->setParameter('user', $options['user']);
+                    return $er->createQueryBuilder('w')
+                        ->where('w.user = :user')
+                        ->setParameter('user', $options['user']);
                 },
             ])
         ;
