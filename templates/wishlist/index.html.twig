@@ -11,7 +11,7 @@
         </div>
         <div class="container bg-primary-custom my-5 py-4">
             <h2 class="text-center align-self-center py-3">Table de vos listes de souhaits</h2>
-            <a class="btn btn-fancy text-primary m-2 p-2 ml-2 text-center" href="{{ path('wishlist_new') }}">Ajouter</a>
+            <a class="btn btn-fancy text-primary m-2 p-2 ml-2 text-center btn-transform" href="{{ path('wishlist_new') }}">Ajouter</a>
             <div class="py-4">
                 <div class="table-responsive"></div>
                 <table class="table table-striped">
@@ -28,7 +28,7 @@
                             <td>
                                 <div class="row">
                                     {# <a class="text-secondary" href="{{ path('wishlist_show', {'id': wishlist.id}) }}">Voir</a> #}
-                                    <a class="text-primary btn btn-fancy"
+                                    <a class="text-primary btn-fancy"
                                        href="{{ path('wishlist_edit', {'id': wishlist.id}) }}">Éditer</a>
                                     {{ include('wishlist/_delete_form.html.twig') }}
                                 </div>
