@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('wish_delete', {'id': wish.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer ce souhait ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wish.id) }}">
+    <div class="text-center">
+        <button title="Supprimer" class="btn-fancy m-2 p-2 ml-2">Supprimer</button>
+    </div>
+</form>

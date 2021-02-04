@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ wish.name }}{% endblock %}
+
+{% block body %}
+    <h1>Wish</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wish.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ wish.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('wish_index') }}">back to list</a>
+
+    <a href="{{ path('wish_edit', {'id': wish.id}) }}">edit</a>
+
+    {{ include('wish/_delete_form.html.twig') }}
+{% endblock %}

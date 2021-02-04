@@ -113,6 +113,15 @@ input {
     margin: 0;
 }
 
+.dropdown-item:hover {
+    background-color: $secondary;
+    color: $primary;
+}
+
+.dropdown-menu.show {
+    top: $spacing-2;
+}
+
 .btn-fancy {
     margin: $spacing-2;
     border: none;
