@@ -122,6 +122,11 @@ input {
     top: $spacing-2;
 }
 
+.btn-transform {
+    padding: 15px 20px 15px 20px !important;
+    margin: $spacing-2 !important;
+}
+
 .btn-fancy {
     margin: $spacing-2;
     border: none;

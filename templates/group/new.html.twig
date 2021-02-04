@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} | Créer un groupe{% endblock %}
+{% block stylesheet %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('group') }}
+{% endblock %}
+{% block body %}
+    <main>
+        <div class="mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Créer un groupe</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Formulaire de création</h2>
+            <div class="py-4">
+                <div class="container">
+                    {{ include('group/_form.html.twig') }}
+                    <div class="col-4">
+                        <a class="btn btn-fancy btn-transform text-primary m-2 p-2 ml-2 text-center" href="{{ path('group_index') }}">
+                            Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

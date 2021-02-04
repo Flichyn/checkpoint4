@@ -10,10 +10,13 @@
                 <a class="nav-link text-light" href="/">Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">Features</a>
+                <a class="nav-link text-light" href="{{ path('wish_index') }}">Souhaits</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">Pricing</a>
+                <a class="nav-link text-light" href="{{ path('wishlist_index') }}">Liste de souhaits</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{{ path('group_index') }}">Groupes</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light" href="{{ path('contact') }}">Contact</a>
@@ -58,7 +61,7 @@
                             Espace Administrateur
                         </a>
                     {% endif %}
-                        <a class="dropdown-item text-right text-lg-left" href="">Mes souhaits</a>
+                        <a class="dropdown-item text-right text-lg-left" href="{{ path('wish_index') }}">Mes souhaits</a>
 
                     <a class="dropdown-item text-right text-lg-left" href="{{ path('app_logout') }}">Déconnexion</a>
                 </div>
