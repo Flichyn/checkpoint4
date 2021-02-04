@@ -17,6 +17,7 @@ class WishFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 20; $i++) {
             $wish = new Wish();
             $wish->setName($faker->word);
+            $wish->setUser($this->getReference('member_' . rand(0, 19)));
             $wish->addWishlist($this->getReference('wishlist_' . rand(0, 19)));
             $manager->persist($wish);
         }
@@ -26,6 +27,6 @@ class WishFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies(): array
     {
-        return [WishlistFixtures::class];
+        return [WishlistFixtures::class, UserFixtures::class];
     }
 }
