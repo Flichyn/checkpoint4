@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Wishlist;
 use App\Form\WishlistType;
 use App\Repository\WishlistRepository;
+use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +24,10 @@ class WishlistController extends AbstractController
      */
     public function index(WishlistRepository $wishlistRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         return $this->render('wishlist/index.html.twig', [
-            'wishlists' => $wishlistRepository->findAll(),
+            'wishlists' => $user->getWishlists()
         ]);
     }
 
@@ -34,12 +38,16 @@ class WishlistController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $wishlist = new Wishlist();
         $form = $this->createForm(WishlistType::class, $wishlist);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $wishlist->setUser($user);
             $entityManager->persist($wishlist);
             $entityManager->flush();
             $this->addFlash('success', 'La liste de souhaits a bien été ajoutée.');
@@ -59,8 +67,9 @@ class WishlistController extends AbstractController
      * @param Wishlist $wishlist
      * @return Response
      */
-    public function show(Wishlist $wishlist): Response
+    public function show(Wishlist $wishlist, WishRepository $wishRepository): Response
     {
+        $wishes = $wishRepository->findOneBy(['id' => $wishlist]);
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
         ]);

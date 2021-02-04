@@ -35,9 +35,15 @@ class Wishlist
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="wishlists")
+     */
+    private $groups;
+
     public function __construct()
     {
         $this->wishes = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +95,30 @@ class Wishlist
     public function setUser(?user $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Group[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        $this->groups->removeElement($group);
 
         return $this;
     }

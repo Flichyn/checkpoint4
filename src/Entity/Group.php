@@ -30,9 +30,15 @@ class Group
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Wishlist::class, mappedBy="groups")
+     */
+    private $wishlists;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +78,33 @@ class Group
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Wishlist[]
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists[] = $wishlist;
+            $wishlist->addGroup($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlist(Wishlist $wishlist): self
+    {
+        if ($this->wishlists->removeElement($wishlist)) {
+            $wishlist->removeGroup($this);
+        }
 
         return $this;
     }
