@@ -5,24 +5,40 @@
     {{ encore_entry_link_tags('group') }}
 {% endblock %}
 {% block body %}
-    <h1>Group</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ group.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ group.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('group_index') }}">back to list</a>
-
-    <a href="{{ path('group_edit', {'id': group.id}) }}">edit</a>
-
+    <main>
+        <div class="mt-0 mb-5 d-flex align-items-center justify-content-center">
+            <h1 class="text-center text-primary mt-5 d-flex align-self-center">Groupe {{ group.name }}</h1>
+        </div>
+        <div class="container bg-primary-custom my-5 py-4">
+            <h2 class="text-center align-self-center py-3">Listes de souhaits de votre groupe</h2>
+            <div class="py-4">
+                <div class="container">
+                    <div class="row">
+                        {% for user in group.users %}
+                            <div class="col-lg-4 col-md-6 col-sm-12 align-self-sm-center">
+                                <div class="card my-4" style="width: 18rem;">
+                                    <div class="card-body rounded border-secondary bg-secondary">
+                                        <h5 class="card-title text-light">{{ user.name }}</h5>
+                                        {% for wishlist in user.wishlists %}
+                                            <p>
+                                                <a href="{{ path('wishlist_show', {'id': wishlist.id}) }}"
+                                                   class="card-text">{{ wishlist.name }}</a>
+                                            </p>
+                                        {% endfor %}
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-fancy btn-transform text-primary m-2 p-2 ml-2 text-center"
+                           href="{{ path('group_index') }}">
+                            Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     {{ include('group/_delete_form.html.twig') }}
 {% endblock %}

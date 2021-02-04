@@ -27,7 +27,7 @@
                             <td>{{ group.name }}</td>
                             <td>
                                 <div class="row">
-                                    {# <a class="text-secondary" href="{{ path('wish_show', {'id': wish.id}) }}">Voir</a> #}
+                                    <a class="text-primary btn-fancy" href="{{ path('group_show', {'id': group.id}) }}">Voir</a>
                                     <a class="text-primary btn-fancy"
                                        href="{{ path('group_edit', {'id': group.id}) }}">Éditer</a>
                                     {{ include('group/_delete_form.html.twig') }}

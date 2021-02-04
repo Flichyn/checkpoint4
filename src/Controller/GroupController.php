@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Group;
+use App\Entity\User;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
+use App\Repository\UserRepository;
+use App\Repository\WishlistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/group")
@@ -22,8 +26,10 @@ class GroupController extends AbstractController
      */
     public function index(GroupRepository $groupRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         return $this->render('group/index.html.twig', [
-            'groups' => $groupRepository->findAll(),
+            'groups' => $user->getGroups(),
         ]);
     }
 
@@ -55,12 +61,22 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}", name="group_show", methods={"GET"})
      * @param Group $group
+     * @param UserRepository $userRepository
      * @return Response
      */
-    public function show(Group $group): Response
+    public function show(Group $group, UserRepository $userRepository): Response
     {
+//        $data = [];
+//        $groupUsers = $group->getUsers();
+//        foreach ($groupUsers as $user) {
+//            $data[] = [$username = $user->getName(), $wishlist = $wishlistRepository->findBy(['user' => $user])];
+//        }
+//        dd($group);
+        $users = $userRepository->findBy(['id' => $group]);
         return $this->render('group/show.html.twig', [
             'group' => $group,
+            'users' => $users
+//            'data' => $data
         ]);
     }
 
@@ -72,7 +88,9 @@ class GroupController extends AbstractController
      */
     public function edit(Request $request, Group $group): Response
     {
-        $form = $this->createForm(GroupType::class, $group);
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(GroupType::class, $group, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
