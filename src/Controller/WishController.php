@@ -38,12 +38,16 @@ class WishController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        /** @var User $user */
+        $this->getUser();
+
         $wish = new Wish();
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $wish->setUser($user);
             $entityManager->persist($wish);
             $entityManager->flush();
             $this->addFlash('success', 'Le souhait a bien été ajouté.');

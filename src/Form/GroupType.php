@@ -33,19 +33,19 @@ class GroupType extends AbstractType
                 'multiple' => true,
                 'attr' => ['class' => 'users py-3']
             ])
-            ->add('wishlists', EntityType::class, [
-                'label' => 'Listes',
-                'class' => Wishlist::class,
-                'choice_label' => 'name',
-                'expanded' => true,
-                'multiple' => true,
-                'attr' => ['class' => 'wishes py-3'],
-                'query_builder' => function (EntityRepository $er) use ($options) {
-                    return $er->createQueryBuilder('w')
-                        ->where('w.user = :user')
-                        ->setParameter('user', $options['user']);
-                },
-            ])
+//            ->add('wishlists', EntityType::class, [
+//                'label' => 'Listes',
+//                'class' => Wishlist::class,
+//                'choice_label' => 'name',
+//                'expanded' => true,
+//                'multiple' => true,
+//                'attr' => ['class' => 'wishes py-3'],
+//                'query_builder' => function (EntityRepository $er) use ($options) {
+//                    return $er->createQueryBuilder('w')
+//                        ->where('w.user = :user')
+//                        ->setParameter('user', $options['user']);
+//                },
+//            ])
         ;
     }
 
