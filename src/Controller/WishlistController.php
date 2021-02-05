@@ -73,11 +73,11 @@ class WishlistController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $wishlists = $user->getWishlists()->getValues();
-        if (!in_array($wishlist, $wishlists)) {
-            $this->addFlash('danger', 'Vous n\'avez pas accès à cette liste.');
-            return $this->redirectToRoute('wishlist_index');
-        }
+//        $wishlists = $user->getWishlists()->getValues();
+//        if (!in_array($wishlist, $wishlists)) {
+//            $this->addFlash('danger', 'Vous n\'avez pas accès à cette liste.');
+//            return $this->redirectToRoute('wishlist_index');
+//        }
 
         $wishes = $wishRepository->findOneBy(['id' => $wishlist]);
         return $this->render('wishlist/show.html.twig', [
