@@ -19,6 +19,28 @@ class WishRepository extends ServiceEntityRepository
         parent::__construct($registry, Wish::class);
     }
 
+//    public function selectAllWishesIdForUser($userId)
+//    {
+//        return $this->createQueryBuilder('w')
+//            ->select('w.id')
+//            ->where('w.user = :userId')
+//            ->setParameter('userId', $userId)
+//            ->getQuery()->getResult();
+//    }
+//
+//    public function findCurrentWishId($wish)
+//    {
+//        return $this->createQueryBuilder('w')
+//            ->select('w.user')
+//            ->where('w.id = :wish')
+//            ->setParameter('wish', $wish)
+//            ->getQuery()->getResult();
+//    }
+//
+//    public function test()
+//    {
+//        return $this->createNamedQuery()
+//    }
     // /**
     //  * @return Wish[] Returns an array of Wish objects
     //  */
