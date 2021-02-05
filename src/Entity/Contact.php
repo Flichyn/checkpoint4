@@ -22,6 +22,7 @@ class Contact
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(max="255", maxMessage="Ce champ ne doit pas dépasser {{ limit }} caractères.")
      */
     private $subject;
 

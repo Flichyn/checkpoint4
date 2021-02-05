@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Wish;
-use App\Form\GroupType;
 use App\Form\WishType;
+use App\Repository\WishlistRepository;
 use App\Repository\WishRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,35 +62,53 @@ class WishController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="wish_show", methods={"GET"})
-     * @param Wish $wish
-     * @return Response
-     */
-    public function show(Wish $wish): Response
-    {
-        return $this->render('wish/show.html.twig', [
-            'wish' => $wish,
-        ]);
-    }
+//    /**
+//     * @Route("/{id}", name="wish_show", methods={"GET"})
+//     * @param Wish $wish
+//     * @return Response
+//     */
+//    public function show(Wish $wish): Response
+//    {
+//        /** @var User $user */
+//        $user = $this->getUser();
+//
+//        return $this->render('wish/show.html.twig', [
+//            'wish' => $wish,
+//        ]);
+//    }
 
     /**
      * @Route("/{id}/edit", name="wish_edit", methods={"GET","POST"})
-     * @param Request $request
      * @param Wish $wish
+     * @param Request $request
+     * @param WishRepository $wishRepository
      * @return Response
      */
-    public function edit(Request $request, Wish $wish): Response
+    public function edit(Wish $wish, Request $request, WishlistRepository $wishlistRepository, WishRepository $wishRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
+
+//        $wishlistrepo = $wishRepository->findBy(['user' => $user]);
+//        $currentWish = $wishRepository->findCurrentWishId($wish);
+//        $wishes = $wishRepository->selectAllWishesIdForUser($user->getId());
+//        dump($currentWish);
+//        dump($wishes);
+//        dump($wishlistrepo);
+//        dump($wish);
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $query = $entityManager->cre
+//        if (in_array($wish->getId(), $wishes)) {
+//            $this->addFlash('danger', 'Vous n\'avez pas accès à ce souhait.');
+//            return $this->redirectToRoute('wish_index');
+//        }
+
         $form = $this->createForm(WishType::class, $wish);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Le souhait a bien été modifié.');
-
 
             return $this->redirectToRoute('wish_index');
         }
@@ -108,6 +127,9 @@ class WishController extends AbstractController
      */
     public function delete(Request $request, Wish $wish): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         if ($this->isCsrfTokenValid('delete'.$wish->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($wish);

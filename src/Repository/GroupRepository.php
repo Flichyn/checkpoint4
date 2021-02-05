@@ -19,6 +19,26 @@ class GroupRepository extends ServiceEntityRepository
         parent::__construct($registry, Group::class);
     }
 
+    public function selectAllGroupsIdForUser($userId)
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.id')
+            ->join('g.users', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()->getResult();
+    }
+
+//    public function selectMembersOfMyGroup($group)
+//    {
+//        return $this->createQueryBuilder('g')
+//            ->select('u.id')
+//            ->join('g.users', 'u')
+//            ->where('u.users = :group')
+//            ->setParameter('group', $group)
+//            ->getQuery()->getResult();
+//    }
+
     // /**
     //  * @return Group[] Returns an array of Group objects
     //  */

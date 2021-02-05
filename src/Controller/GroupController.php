@@ -26,8 +26,10 @@ class GroupController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $groups = $user->getGroups();
+
         return $this->render('group/index.html.twig', [
-            'groups' => $user->getGroups(),
+            'groups' => $groups,
         ]);
     }
 
@@ -64,10 +66,23 @@ class GroupController extends AbstractController
      * @Route("/{id}", name="group_show", methods={"GET"})
      * @param Group $group
      * @param UserRepository $userRepository
+     * @param GroupRepository $groupRepository
      * @return Response
      */
-    public function show(Group $group, UserRepository $userRepository): Response
+    public function show(Group $group, UserRepository $userRepository, GroupRepository $groupRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $groups = $user->getGroups()->getValues();
+//        $members = $groupRepository->selectMembersOfMyGroup($group);
+//        dump($members);
+
+        if (!in_array($group, $groups)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à ce groupe.');
+            return $this->redirectToRoute('group_index');
+        }
+
         $users = $userRepository->findBy(['id' => $group]);
         return $this->render('group/show.html.twig', [
             'group' => $group,
@@ -85,6 +100,13 @@ class GroupController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        $groups = $user->getGroups()->getValues();
+        if (!in_array($group, $groups)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à ce groupe.');
+            return $this->redirectToRoute('group_index');
+        }
+
         $form = $this->createForm(GroupType::class, $group, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
@@ -109,6 +131,15 @@ class GroupController extends AbstractController
      */
     public function delete(Request $request, Group $group): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $groups = $user->getGroups()->getValues();
+        if (!in_array($group, $groups)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à ce groupe.');
+            return $this->redirectToRoute('group_index');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($group);

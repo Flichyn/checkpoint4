@@ -70,6 +70,15 @@ class WishlistController extends AbstractController
      */
     public function show(Wishlist $wishlist, WishRepository $wishRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $wishlists = $user->getWishlists()->getValues();
+        if (!in_array($wishlist, $wishlists)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à cette liste.');
+            return $this->redirectToRoute('wishlist_index');
+        }
+
         $wishes = $wishRepository->findOneBy(['id' => $wishlist]);
         return $this->render('wishlist/show.html.twig', [
             'wishlist' => $wishlist,
@@ -87,6 +96,13 @@ class WishlistController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        $wishlists = $user->getWishlists()->getValues();
+        if (!in_array($wishlist, $wishlists)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à cette liste.');
+            return $this->redirectToRoute('wishlist_index');
+        }
+
         $form = $this->createForm(WishlistType::class, $wishlist, ['user' => $user->getId()]);
         $form->handleRequest($request);
 
@@ -112,6 +128,16 @@ class WishlistController extends AbstractController
      */
     public function delete(Request $request, Wishlist $wishlist): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $wishlists = $user->getWishlists()->getValues();
+        $group = $wishlist->getGroups();
+        if (!in_array($wishlist, $wishlists)) {
+            $this->addFlash('danger', 'Vous n\'avez pas accès à cette liste.');
+            return $this->redirectToRoute('wishlist_index');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$wishlist->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($wishlist);
